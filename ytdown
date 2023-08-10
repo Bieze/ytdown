@@ -1,0 +1,43 @@
+#!/usr/bin/bash
+
+print_help(){
+echo "usage: ytdown [h] [d]
+A project by Horus64
+
+optional arguments:
+  h, help            show this help message and exit
+  d, download        Install a package.
+"
+}
+
+print_help_download(){
+echo "usage: ytdown [d] [f] [pl] {LINK}
+A project by Horus64 
+
+optional arguments:
+  h, help            show this help message and exit
+  f, file            Only download a file.
+  pl, playlist       Only download a playlist."
+}
+
+if [[ $1 == "d" ]] || [[ $1 == "download" ]]; then
+    if [[ $2 == 'f' ]] || [[ $2 == "file" ]]; then
+        if [[ $3 == "" ]]; then
+            echo "Please provide a link for a video to download."
+        fi
+        youtube-dl -x --audio-format mp3 --prefer-ffmpeg $3
+    elif [[ $2 == 'pl' ]] || [[ $2 == "playlist" ]]; then
+        if [[ $3 == "" ]]; then
+            echo "Please provide a link for a video to download."
+        fi
+        youtube-dl --extract-audio --audio-format  mp3 --prefer-ffmpeg -o "%(title)s.%(ext)s" $3
+    elif [[ $2 == 'h' ]] || [[ $2 == 'help' ]]; then
+        print_help_download
+    else
+        print_help_download
+    fi
+elif [[ $1 == "h" ]] || [[ $1 == "help" ]]; then
+    print_help
+else
+    print_help
+fi
